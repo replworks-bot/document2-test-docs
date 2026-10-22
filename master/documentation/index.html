@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title></title>
+        <meta name="description" content="">
+        <link rel="canonical" href="https://site.test/d/e2e-pages/master/documentation">
+        <meta property="og:title" content="">
+        <meta property="og:description" content="">
+        <meta property="og:url" content="https://site.test/d/e2e-pages/master/documentation">
+        <meta property="og:type" content="article">
+        <meta name="color-scheme" content="light dark">
+        <style>
+            :root { color-scheme: light dark; --site-background: #ffffff; --site-text: #1f2328; }
+            body { background-color: var(--site-background); color: var(--site-text); }
+            @media (prefers-color-scheme: dark) {
+                :root { --site-background: #0d1117; --site-text: #e6edf3; }
+                .phiki, .phiki span { color: var(--phiki-dark-color) !important; background-color: var(--phiki-dark-background-color) !important; }
+            }
+        </style>
+    </head>
+    <body data-test="SCR-101">
+        <header>
+            <select data-test="EL-105" aria-label="Version" onchange="window.location.href = this.value">
+                                    <option value="https://replworks-bot.github.io/document2-test-docs/master/documentation" selected>master</option>
+                                    <option value="https://replworks-bot.github.io/document2-test-docs/5.8/documentation" >5.8</option>
+                            </select>
+            <a href="https://github.com/replworks-bot/document2-test-docs" data-test="EL-108">GitHub</a>
+
+            <div data-search-url="https://site.test/search" data-search-project="e2e-pages" data-search-version="master" data-version-base="https://replworks-bot.github.io/document2-test-docs/master">
+                <input type="search" aria-label="Search" data-test="EL-106">
+                <ul data-test="EL-107" hidden></ul>
+            </div>
+        </header>
+
+        <nav data-test="EL-101">
+                            <section >
+                    <h2>Getting Started</h2>
+                    <ul>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/master/installation" >Installation</a>
+                            </li>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/master/configuration" >Configuration</a>
+                            </li>
+                                            </ul>
+                </section>
+                            <section >
+                    <h2>Guides</h2>
+                    <ul>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/master/usage" >Usage</a>
+                            </li>
+                                            </ul>
+                </section>
+                    </nav>
+
+        
+        <main data-test="EL-104">
+            <ul>
+<li>
+<h2>Getting Started</h2>
+<ul>
+<li><a href="https://replworks-bot.github.io/document2-test-docs/master/installation">Installation</a></li>
+<li><a href="https://replworks-bot.github.io/document2-test-docs/master/configuration">Configuration</a></li>
+</ul>
+</li>
+<li>
+<h2>Guides</h2>
+<ul>
+<li><a href="https://replworks-bot.github.io/document2-test-docs/master/usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+        </main>
+
+        <script>
+            (() => {
+                const container = document.querySelector('[data-search-url]');
+                const input = container.querySelector('[data-test="EL-106"]');
+                const results = container.querySelector('[data-test="EL-107"]');
+                let latest = 0;
+
+                const noResults = () => {
+                    const entry = document.createElement('li');
+                    entry.textContent = 'No results.';
+                    entry.dataset.test = 'no-results';
+                    return entry;
+                };
+
+                const show = (items) => {
+                    results.replaceChildren(...(items.length ? items.map((item) => {
+                        const link = document.createElement('a');
+                        link.href = container.dataset.versionBase + '/' + item.slug;
+                        link.textContent = item.title;
+                        const entry = document.createElement('li');
+                        entry.append(link);
+                        return entry;
+                    }) : [noResults()]));
+                    results.hidden = false;
+                };
+
+                input.addEventListener('input', async () => {
+                    const query = input.value.trim();
+                    const request = ++latest;
+
+                    if (query === '') {
+                        results.hidden = true;
+                        results.replaceChildren();
+                        return;
+                    }
+
+                    try {
+                        const url = new URL(container.dataset.searchUrl, window.location.href);
+                        url.search = new URLSearchParams({ project: container.dataset.searchProject, version: container.dataset.searchVersion, q: query });
+                        const response = await fetch(url, { credentials: 'omit' });
+                        const data = response.ok ? await response.json() : { results: [] };
+                        if (request === latest) show(data.results ?? []);
+                    } catch {
+                        if (request === latest) show([]);
+                    }
+                });
+            })();
+        </script>
+    </body>
+</html>

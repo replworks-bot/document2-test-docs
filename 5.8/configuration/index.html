@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Configuration</title>
+        <meta name="description" content="This page describes the configuration options.">
+        <link rel="canonical" href="https://site.test/d/e2e-pages/5.8/configuration">
+        <meta property="og:title" content="Configuration">
+        <meta property="og:description" content="This page describes the configuration options.">
+        <meta property="og:url" content="https://site.test/d/e2e-pages/5.8/configuration">
+        <meta property="og:type" content="article">
+        <meta name="color-scheme" content="light dark">
+        <style>
+            :root { color-scheme: light dark; --site-background: #ffffff; --site-text: #1f2328; }
+            body { background-color: var(--site-background); color: var(--site-text); }
+            @media (prefers-color-scheme: dark) {
+                :root { --site-background: #0d1117; --site-text: #e6edf3; }
+                .phiki, .phiki span { color: var(--phiki-dark-color) !important; background-color: var(--phiki-dark-background-color) !important; }
+            }
+        </style>
+    </head>
+    <body data-test="SCR-101">
+        <header>
+            <select data-test="EL-105" aria-label="Version" onchange="window.location.href = this.value">
+                                    <option value="https://replworks-bot.github.io/document2-test-docs/master/configuration" >master</option>
+                                    <option value="https://replworks-bot.github.io/document2-test-docs/5.8/configuration" selected>5.8</option>
+                            </select>
+            <a href="https://github.com/replworks-bot/document2-test-docs" data-test="EL-108">GitHub</a>
+
+            <div data-search-url="https://site.test/search" data-search-project="e2e-pages" data-search-version="5.8" data-version-base="https://replworks-bot.github.io/document2-test-docs/5.8">
+                <input type="search" aria-label="Search" data-test="EL-106">
+                <ul data-test="EL-107" hidden></ul>
+            </div>
+        </header>
+
+        <nav data-test="EL-101">
+                            <section  data-test="EL-103" data-expanded="true" >
+                    <h2>Getting Started</h2>
+                    <ul>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/5.8/installation" >Installation</a>
+                            </li>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/5.8/configuration"  data-test="EL-102" aria-current="page" >Configuration</a>
+                            </li>
+                                            </ul>
+                </section>
+                            <section >
+                    <h2>Guides</h2>
+                    <ul>
+                                                    <li>
+                                <a href="https://replworks-bot.github.io/document2-test-docs/5.8/usage" >Usage</a>
+                            </li>
+                                            </ul>
+                </section>
+                    </nav>
+
+                    <p data-test="EL-109">Getting Started</p>
+        
+        <main data-test="EL-104">
+            <h1>Configuration</h1>
+<p>This page describes the configuration options.</p>
+<div class="code-container">
+<pre class="phiki language-php github-light phiki-themes github-dark" data-language="php" style="background-color: #fff;color: #24292e;--phiki-dark-background-color: #24292e;--phiki-dark-color: #e1e4e8;"><code><span class="line"><span class="token" style="color: #24292e;--phiki-dark-color: #e1e4e8;">$</span><span class="token" style="color: #24292e;--phiki-dark-color: #e1e4e8;">value</span><span class="token"> </span><span class="token" style="color: #d73a49;--phiki-dark-color: #f97583;">=</span><span class="token"> </span><span class="token" style="color: #6f42c1;--phiki-dark-color: #b392f0;">config</span><span class="token">(</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">example.key</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token">)</span><span class="token">;</span><span class="token">
+</span></span></code></pre>
+</div>
+
+        </main>
+
+        <script>
+            (() => {
+                const container = document.querySelector('[data-search-url]');
+                const input = container.querySelector('[data-test="EL-106"]');
+                const results = container.querySelector('[data-test="EL-107"]');
+                let latest = 0;
+
+                const noResults = () => {
+                    const entry = document.createElement('li');
+                    entry.textContent = 'No results.';
+                    entry.dataset.test = 'no-results';
+                    return entry;
+                };
+
+                const show = (items) => {
+                    results.replaceChildren(...(items.length ? items.map((item) => {
+                        const link = document.createElement('a');
+                        link.href = container.dataset.versionBase + '/' + item.slug;
+                        link.textContent = item.title;
+                        const entry = document.createElement('li');
+                        entry.append(link);
+                        return entry;
+                    }) : [noResults()]));
+                    results.hidden = false;
+                };
+
+                input.addEventListener('input', async () => {
+                    const query = input.value.trim();
+                    const request = ++latest;
+
+                    if (query === '') {
+                        results.hidden = true;
+                        results.replaceChildren();
+                        return;
+                    }
+
+                    try {
+                        const url = new URL(container.dataset.searchUrl, window.location.href);
+                        url.search = new URLSearchParams({ project: container.dataset.searchProject, version: container.dataset.searchVersion, q: query });
+                        const response = await fetch(url, { credentials: 'omit' });
+                        const data = response.ok ? await response.json() : { results: [] };
+                        if (request === latest) show(data.results ?? []);
+                    } catch {
+                        if (request === latest) show([]);
+                    }
+                });
+            })();
+        </script>
+    </body>
+</html>
