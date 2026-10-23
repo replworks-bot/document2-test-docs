@@ -3,3 +3,6 @@
     - [Configuration](/docs/{{version}}/configuration)
 - ## Guides
     - [Usage](/docs/{{version}}/usage)
+- ## Samples
+    - [Markdown Features](/docs/{{version}}/markdown)
+    - [Code Blocks](/docs/{{version}}/code-blocks)
