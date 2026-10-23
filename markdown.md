@@ -11,6 +11,8 @@ This page shows every Markdown feature document2 renders, followed by GitHub syn
 - [Alerts](#alerts)
 - [Footnotes](#footnotes)
 - [Emoji](#emoji)
+- [Math](#math)
+- [Mermaid](#mermaid)
 - [Attributes](#attributes)
 - [Not Rendered Yet](#not-rendered-yet)
 
@@ -217,6 +219,45 @@ Shortcodes next to each other: :heart::tada:
 
 These stay as written: `:rocket:` in code, x:rocket: after a letter, :ROCKET: in upper case, and :not_an_emoji:.
 
+<a name="math"></a>
+## Math
+
+Inline math $E = mc^2$, $`\sqrt{3}`$ with backticks, and $a_{ij}$ with braces.
+
+A display block:
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+A `math` code block:
+
+```math
+\int_0^1 x^2 \, dx = \frac{1}{3}
+```
+
+These stay as written: $5 and $10, the $user variable, a hash $2y$10$abc, and `$x$` in code.
+
+<a name="mermaid"></a>
+## Mermaid
+
+A flowchart:
+
+```mermaid
+graph LR
+    Push --> Build --> Publish
+    Build -->|failed| Log[Build Log]
+```
+
+A sequence diagram:
+
+```mermaid
+sequenceDiagram
+    Author->>GitHub: push
+    GitHub->>Hub: push event
+    Hub-->>Author: Site published
+```
+
 <a name="attributes"></a>
 ## Attributes
 
@@ -230,21 +271,6 @@ A link with a class: [Get started](/docs/{{version}}/installation){.button}
 
 GitHub renders the syntax below, but document2 does not have the extensions for it yet.
 It shows how each one appears today.
-
-### Mermaid
-
-```mermaid
-graph LR
-    Push --> Build --> Publish
-```
-
-### Math
-
-Inline math $E = mc^2$ and a block:
-
-$$
-\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
-$$
 
 ### Collapsed section
 
