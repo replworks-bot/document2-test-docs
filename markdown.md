@@ -8,6 +8,7 @@ This page shows every Markdown feature document2 renders, followed by GitHub syn
 - [Tables](#tables)
 - [Blockquotes](#blockquotes)
 - [Links and Images](#links-and-images)
+- [Alerts](#alerts)
 - [Attributes](#attributes)
 - [Not Rendered Yet](#not-rendered-yet)
 
@@ -153,21 +154,8 @@ A linked image:
 
 [![The replworks-bot avatar](https://github.com/replworks-bot.png?size=48)](https://github.com/replworks-bot)
 
-<a name="attributes"></a>
-## Attributes
-
-A paragraph with a class and an id.
-{.lead #intro}
-
-A link with a class: [Get started](/docs/{{version}}/installation){.button}
-
-<a name="not-rendered-yet"></a>
-## Not Rendered Yet
-
-GitHub renders the syntax below, but document2 does not have the extensions for it yet.
-It shows how each one appears today.
-
-### Alerts
+<a name="alerts"></a>
+## Alerts
 
 > [!NOTE]
 > Useful information that users should know.
@@ -183,6 +171,39 @@ It shows how each one appears today.
 
 > [!CAUTION]
 > Advises about risks or negative outcomes.
+
+An alert with more content:
+
+> [!TIP]
+> Alerts can hold **formatting**, [links](/docs/{{version}}/installation), and `inline code`.
+>
+> - A list item
+> - Another item
+>
+> ```php
+> Route::get('/', fn () => view('welcome'));
+> ```
+
+These stay plain blockquotes: a marker followed by text, and an unknown type.
+
+> [!NOTE] inline text after the marker
+
+> [!UNKNOWN]
+> Unknown type.
+
+<a name="attributes"></a>
+## Attributes
+
+A paragraph with a class and an id.
+{.lead #intro}
+
+A link with a class: [Get started](/docs/{{version}}/installation){.button}
+
+<a name="not-rendered-yet"></a>
+## Not Rendered Yet
+
+GitHub renders the syntax below, but document2 does not have the extensions for it yet.
+It shows how each one appears today.
 
 ### Footnotes
 
