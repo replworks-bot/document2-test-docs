@@ -9,6 +9,8 @@ This page shows every Markdown feature document2 renders, followed by GitHub syn
 - [Blockquotes](#blockquotes)
 - [Links and Images](#links-and-images)
 - [Alerts](#alerts)
+- [Footnotes](#footnotes)
+- [Emoji](#emoji)
 - [Attributes](#attributes)
 - [Not Rendered Yet](#not-rendered-yet)
 
@@ -191,6 +193,30 @@ These stay plain blockquotes: a marker followed by text, and an unknown type.
 > [!UNKNOWN]
 > Unknown type.
 
+<a name="footnotes"></a>
+## Footnotes
+
+Here is a sentence with a footnote.[^1] A named footnote can hold several paragraphs.[^details]
+The first footnote is referenced again here.[^1]
+
+A reference without a definition stays as written: [^missing].
+
+[^1]: This is the footnote text, with **formatting** and a [link](/docs/{{version}}/installation).
+[^details]: The first paragraph of a named footnote.
+
+    Indented lines continue the footnote as a second paragraph.
+
+<a name="emoji"></a>
+## Emoji
+
+Unicode emoji: :rocket: :tada: :+1: :heart: :sparkles: :white_check_mark: :x: :warning: :bulb: :kr:
+
+GitHub custom emoji: :octocat: :shipit:
+
+Shortcodes next to each other: :heart::tada:
+
+These stay as written: `:rocket:` in code, x:rocket: after a letter, :ROCKET: in upper case, and :not_an_emoji:.
+
 <a name="attributes"></a>
 ## Attributes
 
@@ -204,12 +230,6 @@ A link with a class: [Get started](/docs/{{version}}/installation){.button}
 
 GitHub renders the syntax below, but document2 does not have the extensions for it yet.
 It shows how each one appears today.
-
-### Footnotes
-
-Here is a sentence with a footnote.[^1]
-
-[^1]: This is the footnote text.
 
 ### Mermaid
 
@@ -225,10 +245,6 @@ Inline math $E = mc^2$ and a block:
 $$
 \sum_{i=1}^{n} i = \frac{n(n+1)}{2}
 $$
-
-### Emoji shortcodes
-
-:rocket: :tada: :+1:
 
 ### Collapsed section
 
