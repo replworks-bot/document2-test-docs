@@ -7,6 +7,7 @@ This page shows a fenced code block for each common language, for checking synta
 - [Systems and Apps](#systems-and-apps)
 - [Data and Configuration](#data-and-configuration)
 - [Shell and Tooling](#shell-and-tooling)
+- [Tabs](#tabs)
 - [Edge Cases](#edge-cases)
 
 <a name="web"></a>
@@ -622,6 +623,49 @@ Some **bold** and _italic_ text with a [link](https://example.com).
 
 - First item
 - Second item
+```
+
+<a name="tabs"></a>
+## Tabs
+
+Adjacent code blocks with `tab=<name>` are shown as one block with a tab for each.
+
+Two tabs:
+
+```js tab=JavaScript
+export function greet(name) {
+    return `Hello, ${name}!`;
+}
+```
+
+```ts tab=TypeScript
+export function greet(name: string): string {
+    return `Hello, ${name}!`;
+}
+```
+
+Three tabs:
+
+```bash tab=npm
+npm install laravel-echo pusher-js
+```
+
+```bash tab=Yarn
+yarn add laravel-echo pusher-js
+```
+
+```bash tab=pnpm
+pnpm add laravel-echo pusher-js
+```
+
+Choosing a tab above also switches this group, because it has the same tab names, and the choice is remembered on other pages:
+
+```js tab=JavaScript
+greet('Taylor');
+```
+
+```ts tab=TypeScript
+greet('Taylor' as string);
 ```
 
 <a name="edge-cases"></a>
