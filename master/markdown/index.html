@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Markdown Features</title>
+        <meta name="description" content="This page shows every Markdown feature document2 renders, followed by GitHub syntax it does not render yet.">
+        <link rel="canonical" href="https://site.test/d/e2e-pages/master/markdown">
+        <meta property="og:title" content="Markdown Features">
+        <meta property="og:description" content="This page shows every Markdown feature document2 renders, followed by GitHub syntax it does not render yet.">
+        <meta property="og:url" content="https://site.test/d/e2e-pages/master/markdown">
+        <meta property="og:type" content="article">
+        <meta name="color-scheme" content="light dark">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap-grid.min.css" integrity="sha384-VIeCCV0aVHr99fkXDSmzLRuJhJWQXe4bDXs6hgg6w6zOTbtAWr8RqSNWu4a2ef9p" crossorigin="anonymous">
+        <style>
+            :root { color-scheme: light dark; --site-background: #ffffff; --site-text: #1f2328; }
+            body { background-color: var(--site-background); color: var(--site-text); }
+            @media (prefers-color-scheme: dark) {
+                :root { --site-background: #0d1117; --site-text: #e6edf3; }
+                .phiki, .phiki span { color: var(--phiki-dark-color) !important; background-color: var(--phiki-dark-background-color) !important; }
+            }
+
+            *, ::before, ::after {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+            }
+
+            html {
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+                line-height: 1.5;
+                -webkit-text-size-adjust: 100%;
+                tab-size: 4;
+            }
+
+            body {
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            /* Header */
+            header {
+                position: sticky;
+                top: 0;
+                z-index: 40;
+                width: 100%;
+                border-bottom: 1px solid #e5e7eb;
+                background-color: rgba(255, 255, 255, 0.9);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+            }
+            .header-inner {
+                max-width: 80rem;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                height: 4rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 1rem;
+            }
+            .header-left, .header-right {
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            }
+            .brand-logo {
+                display: flex;
+                align-items: center;
+                gap: 0.625rem;
+                font-weight: 700;
+                font-size: 1.125rem;
+                color: #111827;
+                text-decoration: none;
+                letter-spacing: -0.02em;
+            }
+            .brand-logo a {
+                display: flex;
+                color: inherit;
+            }
+            .brand-logo svg {
+                width: 1.75rem;
+                height: 1.75rem;
+                color: #ef4444;
+            }
+            .brand-logo img {
+                height: 1.75rem;
+                width: auto;
+                max-width: 10rem;
+                object-fit: contain;
+            }
+
+            /* Controls */
+            header select {
+                appearance: none;
+                -webkit-appearance: none;
+                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                background-position: right 0.5rem center;
+                background-repeat: no-repeat;
+                background-size: 1.25em 1.25em;
+                padding: 0.375rem 2rem 0.375rem 0.75rem;
+                font-size: 0.875rem;
+                font-weight: 600;
+                border-radius: 0.5rem;
+                border: 1px solid #d1d5db;
+                background-color: #ffffff;
+                color: #374151;
+                cursor: pointer;
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+            header select:focus {
+                outline: none;
+                border-color: #ef4444;
+                box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            }
+
+            .search-box {
+                position: relative;
+            }
+            .search-input-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+            }
+            .search-icon {
+                position: absolute;
+                left: 0.625rem;
+                width: 1rem;
+                height: 1rem;
+                color: #9ca3af;
+                pointer-events: none;
+            }
+            header input[type="search"] {
+                width: 16rem;
+                font-size: 0.875rem;
+                padding: 0.375rem 0.75rem 0.375rem 2.25rem;
+                border-radius: 0.5rem;
+                border: 1px solid #d1d5db;
+                background-color: #f9fafb;
+                color: #111827;
+                transition: all 0.15s ease-in-out;
+            }
+            header input[type="search"]:focus {
+                outline: none;
+                background-color: #ffffff;
+                border-color: #ef4444;
+                box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.2);
+            }
+
+            [data-search-url] ul {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                margin-top: 0.5rem;
+                min-width: 18rem;
+                background-color: #ffffff;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.75rem;
+                box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+                max-height: 24rem;
+                overflow-y: auto;
+                z-index: 50;
+                padding: 0.375rem;
+            }
+            [data-search-url] ul[hidden] {
+                display: none !important;
+            }
+            [data-search-url] ul li {
+                list-style: none;
+            }
+            [data-search-url] ul li a {
+                display: block;
+                padding: 0.625rem 0.875rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #374151;
+                border-radius: 0.5rem;
+                transition: all 0.15s ease-in-out;
+                text-decoration: none;
+            }
+            [data-search-url] ul li a:hover {
+                background-color: #fef2f2;
+                color: #ef4444;
+            }
+            [data-search-url] ul li[data-test="no-results"] {
+                padding: 0.75rem 1rem;
+                font-size: 0.875rem;
+                color: #9ca3af;
+                font-style: italic;
+            }
+
+            .header-links {
+                display: flex;
+                align-items: center;
+                gap: 0.25rem;
+            }
+            .header-links a {
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #4b5563;
+                border-radius: 0.5rem;
+                text-decoration: none;
+            }
+            .header-links a:hover {
+                color: #111827;
+                background-color: #f3f4f6;
+            }
+            footer {
+                margin-top: 3rem;
+                padding-top: 1.5rem;
+                border-top: 1px solid #f3f4f6;
+                font-size: 0.8125rem;
+                color: #6b7280;
+                white-space: pre-line;
+            }
+
+            [data-test="EL-108"] {
+                display: inline-flex;
+                align-items: center;
+                gap: 0.375rem;
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+                font-weight: 500;
+                color: #4b5563;
+                border-radius: 0.5rem;
+                transition: all 0.15s ease-in-out;
+                text-decoration: none;
+                border: 1px solid #e5e7eb;
+            }
+            [data-test="EL-108"]:hover {
+                color: #111827;
+                background-color: #f3f4f6;
+            }
+
+            /* Main Layout */
+            .layout-container {
+                flex: 1;
+                max-width: 80rem;
+                width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+                display: flex;
+            }
+
+            /* Sidebar */
+            nav {
+                padding-top: 2rem;
+                padding-bottom: 2rem;
+                padding-right: 1.5rem;
+                border-right: 1px solid #f3f4f6;
+                position: sticky;
+                top: 4rem;
+                height: calc(100vh - 4rem);
+                overflow-y: auto;
+            }
+            nav details {
+                margin-bottom: 1.75rem;
+            }
+            nav summary {
+                list-style: none;
+                cursor: pointer;
+                font-size: 1rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #6b7280;
+                margin-bottom: 0.5rem;
+                padding-left: 0.75rem;
+            }
+            nav summary::-webkit-details-marker {
+                display: none;
+            }
+            nav ul {
+                list-style: none;
+                padding-left: 0.75rem;
+            }
+            nav li {
+                margin-bottom: 0.125rem;
+            }
+            nav a {
+                display: flex;
+                align-items: center;
+                padding: 0.375rem 0.75rem;
+                font-size: 0.875rem;
+                line-height: 1.25rem;
+                color: #4b5563;
+                border-radius: 0.375rem;
+                text-decoration: none;
+                transition: all 0.15s ease-in-out;
+            }
+            nav a:hover {
+                color: #111827;
+                background-color: #f3f4f6;
+            }
+            nav a[aria-current="page"] {
+                color: #ef4444 !important;
+                font-weight: 600 !important;
+                background-color: #fef2f2 !important;
+                border-left: 3px solid #ef4444;
+                border-top-left-radius: 0 !important;
+                border-bottom-left-radius: 0 !important;
+            }
+
+            /* Content Area */
+            .content-wrapper {
+                min-width: 0;
+                padding: 2.5rem 3rem;
+                max-width: 52rem;
+            }
+
+            @media (max-width: 767.98px) {
+                .header-inner {
+                    height: auto;
+                    min-height: 4rem;
+                    padding: 0.75rem 1rem;
+                    display: grid;
+                    grid-template-columns: minmax(0, 1fr);
+                    gap: 0.75rem;
+                }
+                .header-left {
+                    justify-content: space-between;
+                    min-width: 0;
+                }
+                .header-right {
+                    width: 100%;
+                    min-width: 0;
+                }
+                .search-box {
+                    flex: 1;
+                    min-width: 0;
+                }
+                header input[type="search"] {
+                    width: 100%;
+                }
+                [data-search-url] ul {
+                    min-width: min(18rem, calc(100vw - 2rem));
+                }
+                .layout-container {
+                    padding-left: 1rem;
+                    padding-right: 1rem;
+                }
+                .layout-container nav {
+                    position: static;
+                    height: auto;
+                    overflow: visible;
+                    padding: 1.5rem 0.5rem 1.5rem 0;
+                }
+                nav summary {
+                    padding-left: 0.375rem;
+                    overflow-wrap: anywhere;
+                }
+                nav a {
+                    padding: 0.375rem;
+                    overflow-wrap: anywhere;
+                }
+                .content-wrapper {
+                    padding: 1.5rem 0.75rem;
+                }
+            }
+
+            [data-test="EL-109"] {
+                font-size: 0.8125rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.05em;
+                color: #ef4444;
+                margin-bottom: 0.5rem;
+            }
+
+            /* Markdown Content */
+            main h1 {
+                font-size: 2.25rem;
+                line-height: 2.5rem;
+                font-weight: 800;
+                letter-spacing: -0.025em;
+                color: #111827;
+                margin-bottom: 1.5rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            main h2 {
+                font-size: 1.5rem;
+                line-height: 2rem;
+                font-weight: 700;
+                letter-spacing: -0.02em;
+                color: #111827;
+                margin-top: 2.5rem;
+                margin-bottom: 1rem;
+                padding-bottom: 0.5rem;
+                border-bottom: 1px solid #f3f4f6;
+            }
+            main h3 {
+                font-size: 1.25rem;
+                line-height: 1.75rem;
+                font-weight: 600;
+                color: #1f2328;
+                margin-top: 2rem;
+                margin-bottom: 0.75rem;
+            }
+            main p {
+                font-size: 1rem;
+                line-height: 1.75;
+                color: #374151;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+            main a {
+                color: #ef4444;
+                text-decoration: underline;
+                text-underline-offset: 3px;
+                text-decoration-color: #fca5a5;
+                font-weight: 500;
+                transition: color 0.15s ease-in-out;
+            }
+            main a:hover {
+                color: #dc2626;
+                text-decoration-color: #ef4444;
+            }
+            main ul {
+                list-style-type: disc;
+                padding-left: 1.5rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+            main ol {
+                list-style-type: decimal;
+                padding-left: 1.5rem;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+            }
+            main li {
+                line-height: 1.75;
+                color: #374151;
+                margin-top: 0.375rem;
+                margin-bottom: 0.375rem;
+            }
+            main blockquote {
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                padding: 1rem 1.25rem;
+                border-left: 4px solid #ef4444;
+                background-color: #fef2f2;
+                border-radius: 0 0.5rem 0.5rem 0;
+                color: #4b5563;
+            }
+            main blockquote p {
+                margin: 0;
+            }
+            main .markdown-alert {
+                --alert-color: #0969da;
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                padding: 0.5rem 1rem;
+                border-left: 0.25em solid var(--alert-color);
+                color: inherit;
+            }
+            main .markdown-alert > :last-child {
+                margin-bottom: 0;
+            }
+            main .markdown-alert .markdown-alert-title {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                margin-top: 0;
+                font-weight: 500;
+                line-height: 1;
+                color: var(--alert-color);
+            }
+            main .markdown-alert .octicon {
+                fill: currentColor;
+                flex-shrink: 0;
+            }
+            main .markdown-alert-tip { --alert-color: #1a7f37; }
+            main .markdown-alert-important { --alert-color: #8250df; }
+            main .markdown-alert-warning { --alert-color: #9a6700; }
+            main .markdown-alert-caution { --alert-color: #d1242f; }
+            main .footnote-ref {
+                text-decoration: none;
+            }
+            main .footnotes {
+                margin-top: 3rem;
+                padding-top: 1rem;
+                border-top: 1px solid #e5e7eb;
+                font-size: 0.875rem;
+            }
+            main .footnote-backref {
+                text-decoration: none;
+            }
+            main .math-display {
+                display: block;
+                margin-top: 1rem;
+                margin-bottom: 1rem;
+                overflow-x: auto;
+            }
+            main .code-block {
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.75rem;
+                overflow: hidden;
+            }
+            main .code-block .phiki {
+                margin: 0;
+                padding-left: 0;
+                padding-right: 0;
+                border-radius: 0;
+                box-shadow: none;
+            }
+            main .code-header {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.25rem 0.5rem 0.25rem 1.25rem;
+                font-size: 0.75rem;
+                color: #57606a;
+                background-color: #f6f8fa;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            main .code-copy {
+                display: inline-flex;
+                margin-left: auto;
+                padding: 0.375rem;
+                border: 0;
+                border-radius: 0.375rem;
+                background: transparent;
+                color: inherit;
+                cursor: pointer;
+            }
+            main .code-copy:hover {
+                background-color: rgba(0, 0, 0, 0.06);
+            }
+            main .code-copy .octicon {
+                fill: currentColor;
+            }
+            main .code-copy .octicon-check,
+            main .code-copy[data-copied] .octicon-copy {
+                display: none;
+            }
+            main .code-copy[data-copied] .octicon-check {
+                display: inline;
+                color: #1a7f37;
+            }
+            main .tabbed-code {
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.75rem;
+                overflow: hidden;
+            }
+            main .tabbed-code-nav {
+                display: flex;
+                overflow-x: auto;
+                background-color: #f6f8fa;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            main .tabbed-code-nav-button {
+                padding: 0.5rem 1rem;
+                border: 0;
+                border-bottom: 2px solid transparent;
+                background: transparent;
+                font-size: 0.875rem;
+                color: #57606a;
+                white-space: nowrap;
+                cursor: pointer;
+            }
+            main .tabbed-code-nav-button.active {
+                color: #1f2328;
+                border-bottom-color: #ef4444;
+            }
+            main .tabbed-code .code-container {
+                display: none;
+            }
+            main .tabbed-code .code-container.active {
+                display: block;
+            }
+            main .tabbed-code .code-block {
+                margin: 0;
+                border: 0;
+                border-radius: 0;
+            }
+            main .phiki code {
+                display: inline-block;
+                min-width: 100%;
+            }
+            main .phiki .line {
+                display: block;
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+            main .phiki .line-number {
+                margin-right: 1.25rem;
+                color: #8c959f;
+                user-select: none;
+                -webkit-user-select: none;
+            }
+            main .phiki .line.diff-add { background-color: #f0fff4; }
+            main .phiki .line.diff-remove { background-color: #ffeef0; }
+            main pre.mermaid[data-processed] {
+                text-align: center;
+                background: transparent;
+                box-shadow: none;
+            }
+            main img.emoji {
+                display: inline;
+                height: 1.25em;
+                width: 1.25em;
+                vertical-align: -0.25em;
+            }
+            main code:not(pre code) {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+                font-size: 0.875em;
+                font-weight: 500;
+                color: #ef4444;
+                background-color: #f3f4f6;
+                padding: 0.125rem 0.375rem;
+                border-radius: 0.375rem;
+                border: 1px solid rgba(0, 0, 0, 0.05);
+            }
+            main pre,
+            main .phiki {
+                font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+                font-size: 0.875rem;
+                line-height: 1.7;
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                padding: 1.25rem;
+                border-radius: 0.75rem;
+                overflow-x: auto;
+                box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+                border: 1px solid #e5e7eb;
+            }
+            main table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+                font-size: 0.875rem;
+                border: 1px solid #e5e7eb;
+                border-radius: 0.5rem;
+                overflow: hidden;
+            }
+            main th {
+                background-color: #f9fafb;
+                color: #111827;
+                font-weight: 600;
+                text-align: left;
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            main td {
+                padding: 0.75rem 1rem;
+                border-bottom: 1px solid #f3f4f6;
+                color: #374151;
+            }
+
+            /* Dark mode */
+            @media (prefers-color-scheme: dark) {
+                header {
+                    border-bottom-color: #1f2937;
+                    background-color: rgba(13, 17, 23, 0.9);
+                }
+                .brand-logo {
+                    color: #ffffff;
+                }
+                header select {
+                    border-color: #30363d;
+                    background-color: #161b22;
+                    color: #c9d1d9;
+                    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%238b949e' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+                }
+                header select:focus {
+                    border-color: #f87171;
+                    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.25);
+                }
+                header input[type="search"] {
+                    border-color: #30363d;
+                    background-color: #161b22;
+                    color: #f0f6fc;
+                }
+                header input[type="search"]:focus {
+                    background-color: #0d1117;
+                    border-color: #f87171;
+                    box-shadow: 0 0 0 2px rgba(248, 113, 113, 0.25);
+                }
+                [data-search-url] ul {
+                    background-color: #161b22;
+                    border-color: #30363d;
+                    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+                }
+                [data-search-url] ul li a {
+                    color: #c9d1d9;
+                }
+                [data-search-url] ul li a:hover {
+                    background-color: rgba(239, 68, 68, 0.15);
+                    color: #f87171;
+                }
+                [data-search-url] ul li[data-test="no-results"] {
+                    color: #6e7681;
+                }
+                [data-test="EL-108"] {
+                    color: #8b949e;
+                    border-color: #30363d;
+                }
+                [data-test="EL-108"]:hover {
+                    color: #f0f6fc;
+                    background-color: #21262d;
+                }
+                .header-links a {
+                    color: #8b949e;
+                }
+                .header-links a:hover {
+                    color: #f0f6fc;
+                    background-color: #21262d;
+                }
+                footer {
+                    border-top-color: #1f2937;
+                    color: #8b949e;
+                }
+
+                nav {
+                    border-right-color: #1f2937;
+                }
+                nav summary {
+                    color: #8b949e;
+                }
+                nav a {
+                    color: #8b949e;
+                }
+                nav a:hover {
+                    color: #f0f6fc;
+                    background-color: #161b22;
+                }
+                nav a[aria-current="page"] {
+                    color: #f87171 !important;
+                    background-color: rgba(239, 68, 68, 0.15) !important;
+                    border-left-color: #f87171 !important;
+                }
+
+                [data-test="EL-109"] {
+                    color: #f87171;
+                }
+
+                main h1 {
+                    color: #f9fafb;
+                    border-bottom-color: #1f2937;
+                }
+                main h2 {
+                    color: #f3f4f6;
+                    border-bottom-color: #1f2937;
+                }
+                main h3 {
+                    color: #e5e7eb;
+                }
+                main p {
+                    color: #d1d5db;
+                }
+                main a {
+                    color: #f87171;
+                    text-decoration-color: #7f1d1d;
+                }
+                main a:hover {
+                    color: #fca5a5;
+                    text-decoration-color: #ef4444;
+                }
+                main li {
+                    color: #d1d5db;
+                }
+                main blockquote {
+                    background-color: rgba(239, 68, 68, 0.08);
+                    border-left-color: #f87171;
+                    color: #9ca3af;
+                }
+                main .code-block,
+                main .code-header {
+                    border-color: #30363d;
+                }
+                main .tabbed-code,
+                main .tabbed-code-nav {
+                    border-color: #30363d;
+                }
+                main .tabbed-code-nav {
+                    background-color: #161b22;
+                }
+                main .tabbed-code-nav-button {
+                    color: #8b949e;
+                }
+                main .tabbed-code-nav-button.active {
+                    color: #f0f6fc;
+                    border-bottom-color: #f87171;
+                }
+                main .code-header {
+                    color: #8b949e;
+                    background-color: #161b22;
+                }
+                main .code-copy:hover {
+                    background-color: rgba(255, 255, 255, 0.08);
+                }
+                main .code-copy[data-copied] .octicon-check {
+                    color: #3fb950;
+                }
+                main .phiki .line-number {
+                    color: #6e7681 !important;
+                    background-color: transparent !important;
+                }
+                main .phiki .line.diff-add { background-color: #144620 !important; }
+                main .phiki .line.diff-remove { background-color: #86181d !important; }
+                main .markdown-alert { --alert-color: #4493f8; }
+                main .markdown-alert-tip { --alert-color: #3fb950; }
+                main .markdown-alert-important { --alert-color: #ab7df8; }
+                main .markdown-alert-warning { --alert-color: #d29922; }
+                main .markdown-alert-caution { --alert-color: #f85149; }
+                main .footnotes {
+                    border-top-color: #1f2937;
+                }
+                main code:not(pre code) {
+                    color: #f87171;
+                    background-color: #1f2937;
+                    border-color: rgba(255, 255, 255, 0.08);
+                }
+                main pre,
+                main .phiki {
+                    border-color: #1f2937;
+                    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+                }
+                main table {
+                    border-color: #1f2937;
+                }
+                main th {
+                    background-color: #161b22;
+                    color: #f3f4f6;
+                    border-bottom-color: #1f2937;
+                }
+                main td {
+                    border-bottom-color: #161b22;
+                    color: #d1d5db;
+                }
+            }
+        </style>
+    </head>
+    <body data-test="SCR-101">
+        <header>
+            <div class="header-inner">
+                <div class="header-left">
+                    <div class="brand-logo">
+                        <a href="https://replworks-bot.github.io/document2-test-docs/master/" data-test="EL-112" aria-label="Law API">
+                                                            <img src="https://replworks-bot.github.io/document2-test-docs/assets/site-logo.png" alt="">
+                                                    </a>
+                        <span data-test="EL-113">Law API</span>
+                    </div>
+
+                    <select data-test="EL-105" aria-label="Version" onchange="window.location.href = this.value">
+                                                    <option value="https://replworks-bot.github.io/document2-test-docs/master/markdown" selected>master</option>
+                                                    <option value="https://replworks-bot.github.io/document2-test-docs/5.8/markdown" >5.8</option>
+                                            </select>
+                </div>
+
+                <div class="header-right">
+                    <div class="search-box" data-search-url="https://site.test/search" data-search-project="e2e-pages" data-search-version="master" data-version-base="https://replworks-bot.github.io/document2-test-docs/master">
+                        <div class="search-input-wrapper">
+                            <svg class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                            <input type="search" aria-label="Search" data-test="EL-106">
+                        </div>
+                        <ul data-test="EL-107" hidden></ul>
+                    </div>
+
+                    
+                                            <a href="https://github.com/octo/ipsam-quisquam-commodi" data-test="EL-108">GitHub</a>
+                                    </div>
+            </div>
+        </header>
+
+        <div class="layout-container row">
+            <nav data-test="EL-101" class="col-4 col-md-3">
+                                    <details >
+                        <summary>Getting Started</summary>
+                        <ul>
+                                                            <li>
+                                    <a href="https://replworks-bot.github.io/document2-test-docs/master/installation" >Installation</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://replworks-bot.github.io/document2-test-docs/master/configuration" >Configuration</a>
+                                </li>
+                                                    </ul>
+                    </details>
+                                    <details >
+                        <summary>Guides</summary>
+                        <ul>
+                                                            <li>
+                                    <a href="https://replworks-bot.github.io/document2-test-docs/master/usage" >Usage</a>
+                                </li>
+                                                    </ul>
+                    </details>
+                                    <details  data-test="EL-103" data-expanded="true" open >
+                        <summary>Samples</summary>
+                        <ul>
+                                                            <li>
+                                    <a href="https://replworks-bot.github.io/document2-test-docs/master/markdown"  data-test="EL-102" aria-current="page" >Markdown Features</a>
+                                </li>
+                                                            <li>
+                                    <a href="https://replworks-bot.github.io/document2-test-docs/master/code-blocks" >Code Blocks</a>
+                                </li>
+                                                    </ul>
+                    </details>
+                            </nav>
+
+            <div class="content-wrapper col-8 col-md-9">
+                                    <p data-test="EL-109">Samples</p>
+                
+                <main data-test="EL-104">
+                    <h1>Markdown Features</h1>
+<p>This page shows every Markdown feature document2 renders, followed by GitHub syntax it does not render yet.</p>
+<ul>
+<li><a href="#headings">Headings</a></li>
+<li><a href="#text">Text</a></li>
+<li><a href="#lists">Lists</a></li>
+<li><a href="#tables">Tables</a></li>
+<li><a href="#blockquotes">Blockquotes</a></li>
+<li><a href="#links-and-images">Links and Images</a></li>
+<li><a href="#alerts">Alerts</a></li>
+<li><a href="#footnotes">Footnotes</a></li>
+<li><a href="#emoji">Emoji</a></li>
+<li><a href="#math">Math</a></li>
+<li><a href="#mermaid">Mermaid</a></li>
+<li><a href="#attributes">Attributes</a></li>
+<li><a href="#not-rendered-yet">Not Rendered Yet</a></li>
+</ul>
+<p><a name="headings"></a></p>
+<h2>Headings</h2>
+<h3>Heading level 3</h3>
+<h4>Heading level 4</h4>
+<h5>Heading level 5</h5>
+<h6>Heading level 6</h6>
+<p>A paragraph directly below a heading. Paragraphs are separated by a blank line, and a line break inside a paragraph
+is joined into the same line.</p>
+<p>A line ending with two spaces<br />
+breaks here, and a line ending with a backslash<br />
+breaks here too.</p>
+<p><a name="text"></a></p>
+<h2>Text</h2>
+<p>Text can be <strong>bold</strong>, <em>italic</em>, <em><strong>bold and italic</strong></em>, <del>struck through</del>, or <code>inline code</code>.
+Combine them: <strong>bold with <code>code</code> inside</strong> and <em>italic with a <a href="https://laravel.com">link</a></em>.</p>
+<p>Special characters are escaped: *not italic*, 5 &lt; 10, and © 2026.</p>
+<hr />
+<p>The line above is a horizontal rule. So are the next two.</p>
+<hr />
+<hr />
+<p><a name="lists"></a></p>
+<h2>Lists</h2>
+<p>Unordered list:</p>
+<ul>
+<li>Apples</li>
+<li>Oranges
+<ul>
+<li>Navel</li>
+<li>Blood
+<ul>
+<li>Moro</li>
+<li>Tarocco</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Bananas</li>
+</ul>
+<p>Ordered list:</p>
+<ol>
+<li>Install the package.</li>
+<li>Publish the configuration.
+<ol>
+<li>Run <code>php artisan vendor:publish</code>.</li>
+<li>Edit <code>config/example.php</code>.</li>
+</ol>
+</li>
+<li>Clear the cache.</li>
+</ol>
+<p>An ordered list that starts at 5:</p>
+<ol start="5">
+<li>Fifth</li>
+<li>Sixth</li>
+</ol>
+<p>Task list:</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> Write the documentation</li>
+<li><input checked="" disabled="" type="checkbox"> Add code samples</li>
+<li><input disabled="" type="checkbox"> Review the design
+<ul>
+<li><input disabled="" type="checkbox"> Light mode</li>
+<li><input disabled="" type="checkbox"> Dark mode</li>
+</ul>
+</li>
+</ul>
+<p>A list with paragraphs and code:</p>
+<ol>
+<li>
+<p>First step.</p>
+<p>This paragraph belongs to the first step.</p>
+<div class="code-container">
+<div class="code-block"><div class="code-header"><span class="code-language">Shell</span><button type="button" class="code-copy" aria-label="Copy code" data-copied-label="Copied"><svg class="octicon octicon-copy" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg><svg class="octicon octicon-check" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg></button></div><pre class="phiki language-shellscript github-light phiki-themes github-dark" data-language="shellscript" style="background-color: #fff;color: #24292e;--phiki-dark-background-color: #24292e;--phiki-dark-color: #e1e4e8;"><code><span class="line"><span class="line-number" style="color: #1b1f234d;-webkit-user-select: none;"> 1</span><span class="token" style="color: #6f42c1;--phiki-dark-color: #b392f0;">php</span><span class="token"> </span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">artisan</span><span class="token"> </span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">about</span><span class="token">
+</span></span></code></pre></div>
+</div>
+</li>
+<li>
+<p>Second step.</p>
+</li>
+</ol>
+<p><a name="tables"></a></p>
+<h2>Tables</h2>
+<table>
+<thead>
+<tr>
+<th align="left">Left aligned</th>
+<th align="center">Centered</th>
+<th align="right">Right aligned</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left"><code>string</code></td>
+<td align="center">yes</td>
+<td align="right">1</td>
+</tr>
+<tr>
+<td align="left"><code>integer</code></td>
+<td align="center">no</td>
+<td align="right">1,024</td>
+</tr>
+<tr>
+<td align="left"><code>boolean</code></td>
+<td align="center">yes</td>
+<td align="right">65,536</td>
+</tr>
+</tbody>
+</table>
+<p>A wide table:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>URI</th>
+<th>Action</th>
+<th>Middleware</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/projects</code></td>
+<td><code>ProjectList</code></td>
+<td><code>auth</code></td>
+<td><code>projects.index</code></td>
+<td>Lists the projects of the signed-in author with their latest build status.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/projects/create</code></td>
+<td><code>AddProject</code></td>
+<td><code>auth</code></td>
+<td><code>projects.create</code></td>
+<td>Registers a repository as a new project and starts the first build.</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/projects/{project}/settings</code></td>
+<td><code>ProjectSettings</code></td>
+<td><code>auth</code></td>
+<td><code>projects.settings</code></td>
+<td>Changes the versions, default document, project name, and custom domain.</td>
+</tr>
+</tbody>
+</table>
+<p>A table with formatting inside cells:</p>
+<table>
+<thead>
+<tr>
+<th>Feature</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Search</strong></td>
+<td><del>Planned</del> Done</td>
+</tr>
+<tr>
+<td><em>Versions</em></td>
+<td>Supported, see <a href="https://replworks-bot.github.io/document2-test-docs/master/installation">Installation</a></td>
+</tr>
+</tbody>
+</table>
+<p><a name="blockquotes"></a></p>
+<h2>Blockquotes</h2>
+<blockquote>
+<p>A blockquote with <strong>bold</strong> text and a <a href="https://example.com">link</a>.</p>
+</blockquote>
+<blockquote>
+<p>A blockquote with several paragraphs.</p>
+<p>The second paragraph.</p>
+<blockquote>
+<p>A nested blockquote.</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>A blockquote with a list:</p>
+<ul>
+<li>One</li>
+<li>Two</li>
+</ul>
+</blockquote>
+<p><a name="links-and-images"></a></p>
+<h2>Links and Images</h2>
+<ul>
+<li>An inline link: <a href="https://laravel.com">Laravel</a></li>
+<li>A link with a title: <a href="https://laravel.com" title="The PHP framework">Laravel</a></li>
+<li>A link to another page in this version: <a href="https://replworks-bot.github.io/document2-test-docs/master/configuration">Configuration</a></li>
+<li>A link to a section on this page: <a href="#tables">Tables</a></li>
+<li>A reference link: <a href="https://spec.commonmark.org" title="CommonMark Spec">CommonMark</a></li>
+<li>An autolink: <a href="https://github.com/replworks-bot/document2-test-docs">https://github.com/replworks-bot/document2-test-docs</a></li>
+<li>An angle-bracket autolink: <a href="https://commonmark.org">https://commonmark.org</a></li>
+<li>An email autolink: <a href="mailto:hello@example.com">hello@example.com</a></li>
+</ul>
+<p>An image:</p>
+<p><img src="https://github.com/replworks-bot.png?size=120" alt="The replworks-bot avatar" /></p>
+<p>A linked image:</p>
+<p><a href="https://github.com/replworks-bot"><img src="https://github.com/replworks-bot.png?size=48" alt="The replworks-bot avatar" /></a></p>
+<p><a name="alerts"></a></p>
+<h2>Alerts</h2>
+<div class="markdown-alert markdown-alert-note">
+<p class="markdown-alert-title"><svg class="octicon octicon-info" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8Zm8-6.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13ZM6.5 7.75A.75.75 0 0 1 7.25 7h1a.75.75 0 0 1 .75.75v2.75h.25a.75.75 0 0 1 0 1.5h-2a.75.75 0 0 1 0-1.5h.25v-2h-.25a.75.75 0 0 1-.75-.75ZM8 6a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Note</p>
+<p>Useful information that users should know.</p>
+</div>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title"><svg class="octicon octicon-light-bulb" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>Helpful advice for doing things better.</p>
+</div>
+<div class="markdown-alert markdown-alert-important">
+<p class="markdown-alert-title"><svg class="octicon octicon-report" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 1.75C0 .784.784 0 1.75 0h12.5C15.216 0 16 .784 16 1.75v9.5A1.75 1.75 0 0 1 14.25 13H8.06l-2.573 2.573A1.458 1.458 0 0 1 3 14.543V13H1.75A1.75 1.75 0 0 1 0 11.25Zm1.75-.25a.25.25 0 0 0-.25.25v9.5c0 .138.112.25.25.25h2a.75.75 0 0 1 .75.75v2.19l2.72-2.72a.749.749 0 0 1 .53-.22h6.5a.25.25 0 0 0 .25-.25v-9.5a.25.25 0 0 0-.25-.25Zm7 2.25v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 9a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Important</p>
+<p>Key information users need to know.</p>
+</div>
+<div class="markdown-alert markdown-alert-warning">
+<p class="markdown-alert-title"><svg class="octicon octicon-alert" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M6.457 1.047c.659-1.234 2.427-1.234 3.086 0l6.082 11.378A1.75 1.75 0 0 1 14.082 15H1.918a1.75 1.75 0 0 1-1.543-2.575Zm1.763.707a.25.25 0 0 0-.44 0L1.698 13.132a.25.25 0 0 0 .22.368h12.164a.25.25 0 0 0 .22-.368Zm.53 3.996v2.5a.75.75 0 0 1-1.5 0v-2.5a.75.75 0 0 1 1.5 0ZM9 11a1 1 0 1 1-2 0 1 1 0 0 1 2 0Z"></path></svg>Warning</p>
+<p>Urgent info that needs immediate attention.</p>
+</div>
+<div class="markdown-alert markdown-alert-caution">
+<p class="markdown-alert-title"><svg class="octicon octicon-stop" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M4.47.22A.749.749 0 0 1 5 0h6c.199 0 .389.079.53.22l4.25 4.25c.141.14.22.331.22.53v6a.749.749 0 0 1-.22.53l-4.25 4.25A.749.749 0 0 1 11 16H5a.749.749 0 0 1-.53-.22L.22 11.53A.749.749 0 0 1 0 11V5c0-.199.079-.389.22-.53Zm.84 1.28L1.5 5.31v5.38l3.81 3.81h5.38l3.81-3.81V5.31L10.69 1.5ZM8 4a.75.75 0 0 1 .75.75v3.5a.75.75 0 0 1-1.5 0v-3.5A.75.75 0 0 1 8 4Zm0 8a1 1 0 1 1 0-2 1 1 0 0 1 0 2Z"></path></svg>Caution</p>
+<p>Advises about risks or negative outcomes.</p>
+</div>
+<p>An alert with more content:</p>
+<div class="markdown-alert markdown-alert-tip">
+<p class="markdown-alert-title"><svg class="octicon octicon-light-bulb" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8 1.5c-2.363 0-4 1.69-4 3.75 0 .984.424 1.625.984 2.304l.214.253c.223.264.47.556.673.848.284.411.537.896.621 1.49a.75.75 0 0 1-1.484.211c-.04-.282-.163-.547-.37-.847a8.456 8.456 0 0 0-.542-.68c-.084-.1-.173-.205-.268-.32C3.201 7.75 2.5 6.766 2.5 5.25 2.5 2.31 4.863 0 8 0s5.5 2.31 5.5 5.25c0 1.516-.701 2.5-1.328 3.259-.095.115-.184.22-.268.319-.207.245-.383.453-.541.681-.208.3-.33.565-.37.847a.751.751 0 0 1-1.485-.212c.084-.593.337-1.078.621-1.489.203-.292.45-.584.673-.848.075-.088.147-.173.213-.253.561-.679.985-1.32.985-2.304 0-2.06-1.637-3.75-4-3.75ZM5.75 12h4.5a.75.75 0 0 1 0 1.5h-4.5a.75.75 0 0 1 0-1.5ZM6 15.25a.75.75 0 0 1 .75-.75h2.5a.75.75 0 0 1 0 1.5h-2.5a.75.75 0 0 1-.75-.75Z"></path></svg>Tip</p>
+<p>Alerts can hold <strong>formatting</strong>, <a href="https://replworks-bot.github.io/document2-test-docs/master/installation">links</a>, and <code>inline code</code>.</p>
+<ul>
+<li>A list item</li>
+<li>Another item</li>
+</ul>
+<div class="code-container">
+<div class="code-block"><div class="code-header"><span class="code-language">PHP</span><button type="button" class="code-copy" aria-label="Copy code" data-copied-label="Copied"><svg class="octicon octicon-copy" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path></svg><svg class="octicon octicon-check" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path></svg></button></div><pre class="phiki language-php github-light phiki-themes github-dark" data-language="php" style="background-color: #fff;color: #24292e;--phiki-dark-background-color: #24292e;--phiki-dark-color: #e1e4e8;"><code><span class="line"><span class="line-number" style="color: #1b1f234d;-webkit-user-select: none;"> 1</span><span class="token" style="color: #005cc5;--phiki-dark-color: #79b8ff;">Route</span><span class="token" style="color: #d73a49;--phiki-dark-color: #f97583;">::</span><span class="token" style="color: #6f42c1;--phiki-dark-color: #b392f0;">get</span><span class="token">(</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">/</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token">,</span><span class="token"> </span><span class="token" style="color: #d73a49;--phiki-dark-color: #f97583;">fn</span><span class="token"> </span><span class="token">(</span><span class="token">)</span><span class="token"> </span><span class="token">=&gt;</span><span class="token"> </span><span class="token" style="color: #6f42c1;--phiki-dark-color: #b392f0;">view</span><span class="token">(</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">welcome</span><span class="token" style="color: #032f62;--phiki-dark-color: #9ecbff;">&#039;</span><span class="token">)</span><span class="token">)</span><span class="token">;</span><span class="token">
+</span></span></code></pre></div>
+</div>
+</div>
+<p>These stay plain blockquotes: a marker followed by text, and an unknown type.</p>
+<blockquote>
+<p>[!NOTE] inline text after the marker</p>
+</blockquote>
+<blockquote>
+<p>[!UNKNOWN]
+Unknown type.</p>
+</blockquote>
+<p><a name="footnotes"></a></p>
+<h2>Footnotes</h2>
+<p>Here is a sentence with a footnote.<sup id="fnref:1"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup> A named footnote can hold several paragraphs.<sup id="fnref:details"><a class="footnote-ref" href="#fn:details" role="doc-noteref">2</a></sup>
+The first footnote is referenced again here.<sup id="fnref:1__2"><a class="footnote-ref" href="#fn:1" role="doc-noteref">1</a></sup></p>
+<p>A reference without a definition stays as written: [^missing].</p>
+<p><a name="emoji"></a></p>
+<h2>Emoji</h2>
+<p>Unicode emoji: 🚀 🎉 👍 ❤️ ✨ ✅ ❌ ⚠️ 💡 🇰🇷</p>
+<p>GitHub custom emoji: <img class="emoji" title=":octocat:" alt=":octocat:" src="https://github.githubassets.com/images/icons/emoji/octocat.png" height="20" width="20" /> <img class="emoji" title=":shipit:" alt=":shipit:" src="https://github.githubassets.com/images/icons/emoji/shipit.png" height="20" width="20" /></p>
+<p>Shortcodes next to each other: ❤️🎉</p>
+<p>These stay as written: <code>:rocket:</code> in code, x:rocket: after a letter, :ROCKET: in upper case, and :not_an_emoji:.</p>
+<p><a name="math"></a></p>
+<h2>Math</h2>
+<p>Inline math <span class="math math-inline">\(E = mc^2\)</span>, <span class="math math-inline">\(\sqrt{3}\)</span> with backticks, and <span class="math math-inline">\(a_{ij}\)</span> with braces.</p>
+<p>A display block:</p>
+<p><span class="math math-display">\[
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+\]</span></p>
+<p>A <code>math</code> code block:</p>
+<div class="math math-display">\[\int_0^1 x^2 \, dx = \frac{1}{3}\]</div>
+<p>These stay as written: $5 and $10, the $user variable, a hash $2y$10$abc, and <code>$x$</code> in code.</p>
+<p><a name="mermaid"></a></p>
+<h2>Mermaid</h2>
+<p>A flowchart:</p>
+<pre class="mermaid">graph LR
+    Push --&gt; Build --&gt; Publish
+    Build --&gt;|failed| Log[Build Log]
+</pre>
+<p>A sequence diagram:</p>
+<pre class="mermaid">sequenceDiagram
+    Author-&gt;&gt;GitHub: push
+    GitHub-&gt;&gt;Hub: push event
+    Hub--&gt;&gt;Author: Site published
+</pre>
+<p><a name="attributes"></a></p>
+<h2>Attributes</h2>
+<p class="lead" id="intro">A paragraph with a class and an id.</p>
+<p>A link with a class: <a class="button" href="https://replworks-bot.github.io/document2-test-docs/master/installation">Get started</a></p>
+<p><a name="not-rendered-yet"></a></p>
+<h2>Not Rendered Yet</h2>
+<p>GitHub renders the syntax below, but document2 does not have the extensions for it yet.
+It shows how each one appears today.</p>
+<h3>Collapsed section</h3>
+<details>
+<summary>Click to expand</summary>
+<p>Hidden content.</p>
+</details>
+<h3>Keyboard keys</h3>
+<p>Press <kbd>Ctrl</kbd> + <kbd>C</kbd> to copy.</p>
+<div class="footnotes" role="doc-endnotes"><ol><li class="footnote" id="fn:1" role="doc-endnote"><p>This is the footnote text, with <strong>formatting</strong> and a <a href="https://replworks-bot.github.io/document2-test-docs/master/installation">link</a>.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1" role="doc-backlink">↩</a>&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:1__2" role="doc-backlink">↩</a></p></li>
+<li class="footnote" id="fn:details" role="doc-endnote"><p>The first paragraph of a named footnote.</p>
+<p>Indented lines continue the footnote as a second paragraph.&nbsp;<a class="footnote-backref" rev="footnote" href="#fnref:details" role="doc-backlink">↩</a></p></li></ol></div>
+
+                </main>
+
+                            </div>
+        </div>
+
+        <script>
+            (() => {
+                const container = document.querySelector('[data-search-url]');
+                const input = container.querySelector('[data-test="EL-106"]');
+                const results = container.querySelector('[data-test="EL-107"]');
+                let latest = 0;
+
+                const noResults = () => {
+                    const entry = document.createElement('li');
+                    entry.textContent = 'No results.';
+                    entry.dataset.test = 'no-results';
+                    return entry;
+                };
+
+                const show = (items) => {
+                    results.replaceChildren(...(items.length ? items.map((item) => {
+                        const link = document.createElement('a');
+                        link.href = container.dataset.versionBase + '/' + item.slug;
+                        link.textContent = item.title;
+                        const entry = document.createElement('li');
+                        entry.append(link);
+                        return entry;
+                    }) : [noResults()]));
+                    results.hidden = false;
+                };
+
+                input.addEventListener('input', async () => {
+                    const query = input.value.trim();
+                    const request = ++latest;
+
+                    if (query === '') {
+                        results.hidden = true;
+                        results.replaceChildren();
+                        return;
+                    }
+
+                    try {
+                        const url = new URL(container.dataset.searchUrl, window.location.href);
+                        url.search = new URLSearchParams({ project: container.dataset.searchProject, version: container.dataset.searchVersion, q: query });
+                        const response = await fetch(url, { credentials: 'omit' });
+                        const data = response.ok ? await response.json() : { results: [] };
+                        if (request === latest) show(data.results ?? []);
+                    } catch {
+                        if (request === latest) show([]);
+                    }
+                });
+            })();
+        </script>
+        <script>
+            (() => {
+                const navigation = document.querySelector('[data-test="EL-101"]');
+                const active = navigation.querySelector('[aria-current="page"]');
+
+                if (active) {
+                    const box = navigation.getBoundingClientRect();
+                    const link = active.getBoundingClientRect();
+                    navigation.scrollTop += (link.top + link.height / 2) - (box.top + box.height / 2);
+                }
+            })();
+
+            document.querySelectorAll('[data-test="EL-101"] details').forEach((section, _, sections) => {
+                section.addEventListener('toggle', () => {
+                    if (section.open) {
+                        sections.forEach((other) => {
+                            if (other !== section) other.open = false;
+                        });
+                    }
+                });
+            });
+        </script>
+        <script>
+            document.querySelectorAll('main .code-copy').forEach((button) => {
+                const label = button.getAttribute('aria-label');
+
+                button.addEventListener('click', async () => {
+                    const lines = button.closest('.code-block').querySelectorAll('pre code .line');
+                    const text = [...lines].map((line) => [...line.childNodes]
+                        .filter((node) => ! node.classList?.contains('line-number'))
+                        .map((node) => node.textContent)
+                        .join('')).join('').replace(/\n$/, '');
+
+                    try {
+                        await navigator.clipboard.writeText(text);
+                    } catch {
+                        return;
+                    }
+
+                    button.dataset.copied = '';
+                    button.setAttribute('aria-label', button.dataset.copiedLabel);
+                    setTimeout(() => {
+                        delete button.dataset.copied;
+                        button.setAttribute('aria-label', label);
+                    }, 2000);
+                });
+            });
+        </script>
+                    <script>window.MathJax = { startup: { elements: ['.math'] } };</script>
+            <script defer src="https://cdn.jsdelivr.net/npm/mathjax@4.1.3/tex-chtml.js" integrity="sha384-IgpmJyK7IVIVd18E1Ubslp9a1s6/6VBt9aJFbpzNIJPPMaxwEV7OxR/xY0hHbSck" crossorigin="anonymous"></script>
+                            <script defer src="https://cdn.jsdelivr.net/npm/mermaid@12.2.0/dist/mermaid.min.js" integrity="sha384-8xUhuLNMjW/cI2Dacg3DR4WliYznvIg0LVG1stctThKD/YVrJFI9TNCFxft5NYgp" crossorigin="anonymous"></script>
+            <script>
+                document.addEventListener('DOMContentLoaded', () => {
+                    if (! window.mermaid) {
+                        return;
+                    }
+
+                    const dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    mermaid.initialize({ startOnLoad: false, securityLevel: 'strict', htmlLabels: false, theme: dark ? 'dark' : 'default' });
+                    mermaid.run({ querySelector: 'main pre.mermaid' });
+                });
+            </script>
+            </body>
+</html>
